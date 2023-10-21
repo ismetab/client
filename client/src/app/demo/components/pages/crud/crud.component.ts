@@ -36,7 +36,8 @@ export class CrudComponent implements OnInit {
         this.productService.getProducts().then(data => this.products = data);
 
         this.cols = [
-            { field: 'product', header: 'Product' },
+            { field: 'product',
+                header: 'Product' },
             { field: 'price', header: 'Price' },
             { field: 'category', header: 'Category' },
             { field: 'rating', header: 'Reviews' },

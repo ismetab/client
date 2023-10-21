@@ -19,28 +19,42 @@ import {User} from "./user.model";
 export class LoginComponent {
 
     valCheck: string[] = ['remember'];
+    errorMessage: string = '';  // Add this line
 
     password!: string;
     email!: string;
     constructor(public layoutService: LayoutService, private router: Router, private http: HttpClient) { }
 
     onSubmit() {
-        // Create a request payload
         const payload = {
             username: this.email,
-            password: this.password,
-            role: "USER"
+            password: this.password
         };
 
-        // Making the API call
-        this.http.post<User>('http://localhost:8080/auth/login', payload).subscribe({
-            next: (response: User) => {
-                console.log('Login successful', response);
-                this.router.navigate(['/']);
-            },
-            error: (error) => {
-                console.error('Login failed', error);
-            }
-        });
+        // Assuming the response is now of type 'json' and not 'text'
+        this.http.post<AuthenticationResponseDTO>('http://localhost:8080/login', payload)
+            .subscribe({
+                next: (response: AuthenticationResponseDTO) => {
+                    console.log('Login successful', response);
+
+                    // Optionally store the username and role in local storage or elsewhere
+                    localStorage.setItem('authToken', response.token);
+                    localStorage.setItem('username', response.username);
+                    localStorage.setItem('userRole', response.role);
+
+                    // Navigate to home page or wherever is appropriate post-login
+                    this.router.navigate(['/']);
+                },
+                error: (error) => {
+                    console.error('Login failed', error);
+                    this.errorMessage = 'Login failed. Please check your credentials and try again.';
+                }
+            });
     }
+}
+
+interface AuthenticationResponseDTO {
+    username: string;
+    token: string;
+    role: string;
 }

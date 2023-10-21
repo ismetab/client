@@ -31,11 +31,6 @@ export class AppMenuComponent implements OnInit {
                 icon: 'pi pi-fw pi-briefcase',
                 items: [
                     {
-                        label: 'Landing',
-                        icon: 'pi pi-fw pi-globe',
-                        routerLink: ['/landing']
-                    },
-                    {
                         label: 'Auth',
                         icon: 'pi pi-fw pi-user',
                         items: [
@@ -43,11 +38,6 @@ export class AppMenuComponent implements OnInit {
                                 label: 'Login',
                                 icon: 'pi pi-fw pi-sign-in',
                                 routerLink: ['/auth/login']
-                            },
-                            {
-                                label: 'Error',
-                                icon: 'pi pi-fw pi-times-circle',
-                                routerLink: ['/auth/error']
                             },
                             {
                                 label: 'Access Denied',
